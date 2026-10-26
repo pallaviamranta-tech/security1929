@@ -1,0 +1,28 @@
+{
+  "name": "security-bot-18n28",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "18n28 Security Bot - Telegram moderation bot running on Cloudflare Workers with D1.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "check": "node --check src/index.js && node --check src/bot.js && node --check src/db.js && node --check src/util.js && node --check src/config.js && node --check scripts/webhook.mjs && node --check scripts/json-to-sql.mjs",
+    "db:migrate:local": "wrangler d1 migrations apply security-bot-18n28-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply security-bot-18n28-db --remote",
+    "convert-data": "node scripts/json-to-sql.mjs members-data.json import.sql",
+    "db:import:remote": "wrangler d1 execute security-bot-18n28-db --remote --file=import.sql",
+    "webhook:set": "node scripts/webhook.mjs set",
+    "webhook:info": "node scripts/webhook.mjs info",
+    "webhook:delete": "node scripts/webhook.mjs delete"
+  },
+  "dependencies": {
+    "grammy": "^1.30.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

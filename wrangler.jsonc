@@ -1,0 +1,32 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // The Worker name becomes part of your URL:
+  // https://security-bot-18n28.<your-account-subdomain>.workers.dev
+  "name": "security-bot-18n28",
+  "main": "src/index.js",
+  "compatibility_date": "2025-09-01",
+
+  // Safety net for npm libraries. The bot itself does not use the file system.
+  "compatibility_flags": ["nodejs_compat"],
+
+  "workers_dev": true,
+
+  // Lets you read console.log / console.error output in the Cloudflare dashboard.
+  "observability": { "enabled": true },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "security-bot-18n28-db",
+      // >>> YOU MUST REPLACE THIS with the database_id printed by "wrangler d1 create" <<<
+      "database_id": "PASTE_YOUR_D1_DATABASE_ID_HERE",
+      "migrations_dir": "migrations"
+    }
+  ]
+
+  // Secrets are NOT stored in this file. Set them with:
+  //   npx wrangler secret put BOT_TOKEN
+  //   npx wrangler secret put WEBHOOK_SECRET
+  //   npx wrangler secret put MAIN_OWNER_ID
+}
